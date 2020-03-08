@@ -1,0 +1,4 @@
+{  "repo": [
+      { "name": "ctng", "source": "https://github.com/crosstool-ng/crosstool-ng", "commit": "3f461da11f1f8e9dcfdffef24e1982b5ffd10305", "destination": "/System/SDK/crosstool-ng"}
+    ]
+}

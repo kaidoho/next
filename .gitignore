@@ -1,1 +1,5 @@
 Modules/__pycache__
+System/OS/rtems
+System/SDK/crosstool-ng
+Tools
+tmp-tc-build

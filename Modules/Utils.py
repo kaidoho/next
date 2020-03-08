@@ -61,7 +61,7 @@ def run_cmd(cmd, workdir, *args, **kwargs):
       tmpl = tmp.split('\\r')
       for s in tmpl:
         logger.info(s)
-    
+
   p.stdout.close()
   p.wait()
 
@@ -89,23 +89,41 @@ def run_cmd_ng(cmd, workdir, *args, **kwargs):
   p.wait()
 
 
-def run_build(ninjaBin,workDir):
-  if not os.path.exists(workDir):
-    logger.error("Error build folder does not exist. Run config")
-    sys.exit()
+def check_if_file_exits(filename):
 
-  cmd = [ninjaBin]
-  cmd.append("-v")
-  run_cmd(cmd, workDir)
+    if not os.path.isfile( filename ):
+        logger.warning("File not found at {0}".format(filename))
+        return -1
+    
+    return 0
 
+def check_if_path_exits(directory):
 
-def run_install(ninjaBin,workDir):
-  if not os.path.exists(workDir):
-    logger.error("Error build folder does not exist. Run config")
-    sys.exit()
+    if not os.path.isdir( directory ):
+        logger.warning("Directory not found at {0}".format(directory))
+        return -1
+    
+    return 0
 
-  cmd = [ninjaBin]
-  cmd.append("install")
-  cmd.append("-v")
-  run_cmd(cmd, workDir)
-  
+def get_repo_by_name(repospecfile, name):
+
+    with open( repospecfile , "r") as f:
+        repospec = json.load(f)
+        repos = repospec["repo"]
+        for repo in range(len(repospec)):
+            if repospec["repo"][repo]["name"] == name:
+                return repospec["repo"][repo] 
+        
+        logger.error("Repository {0} not found in spec file".format(name))
+
+ 
+def apply_patches(topDir, srcToPatchDir, patchSourceDir):
+
+    patches = sorted(glob.glob(patchSourceDir + "/*.patch"))
+
+    for patch in patches:
+        logger.info("Apply patch: {0}".format(patch))
+        rela = os.path.relpath(topDir, srcToPatchDir)
+        relb = os.path.relpath(patchSourceDir, topDir)
+        cmd = "patch -p1 < {0}".format(patch)
+        run_cmd(cmd, srcToPatchDir)
