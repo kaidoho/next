@@ -1,0 +1,4 @@
+{  "repo": [
+      { "source": "https://github.com/RTEMS/rtems.git", "commit": "latest", "destination": "/System/OS/rtems"}
+    ]
+}
