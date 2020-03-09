@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0 
 #
 
-
+from Modules.Git import *
 from Modules.ConfigParser import *
 
 def rtems_clean_src_dir(rdir):
@@ -40,13 +40,17 @@ def rtems_copy_in_static_cmake_files(rdir):
 def rtems_add_cmake(repospecfile):
     cwd = os.getcwd()
 
-    check_if_file_exits(repospecfile)
+
     repo = get_repo_by_name(repospecfile,"rtems")
     repodir = cwd+repo["destination"]
 
     logger.info("Bootstrap RTEMS")
     logger.info("Current work directory: {0}".format(cwd))
     logger.info("RTEMS directory: {0}".format(repodir))
+
+
+    git_clone_repos(repospecfile)
+
     rtems_clean_src_dir(repodir)
     rtems_copy_in_static_cmake_files(repodir)
 

@@ -43,6 +43,7 @@ def ctng_build_toolchain(topDir, buildDir,ctng_prefix,toolchain_prefix, arch, op
 
     cfg = cfg.replace("CT_PREFIX=","CT_PREFIX=\"{0}\"".format(toolchain_prefix))
     cfg = cfg.replace("CT_LOCAL_TARBALLS_DIR=","CT_LOCAL_TARBALLS_DIR=\"{0}/tarballs\"".format(ctng_prefix))
+    cfg = cfg.replace("CT_LOCAL_PATCH_DIR=","CT_LOCAL_PATCH_DIR=\"{0}\"".format(topDir + "/patches"))
 
     f = open(cfgInputFile,'w')
     f.write(cfg)

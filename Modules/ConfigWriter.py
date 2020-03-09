@@ -71,7 +71,7 @@ class CmakeFileWriter():
         if -1 != idx:
           name  =  dependencyNames[i + 1]
           name = "\"{0}\")\n".format(str(name[4:]).lower())
-          self.cmFile.write("if(${\"RTEMS_TOP_ARCH\"} STREQUAL " + name)
+          self.cmFile.write("if(${RTEMS_TOP_ARCH} STREQUAL " + name)
           cpu = dependencyNames[i + 1]
           searchPath = self.sourceFolder + "/score/cpu/" + cpu[4:].lower()
           self.__addArchitectureIncludePaths(searchPath)

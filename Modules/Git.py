@@ -28,12 +28,12 @@ def git_clone_repo(repo):
 
 def git_clone_repos(repospecfile):
 
-    check_if_file_exits(repospecfile)
-
- 
-    with open( repospecfile , "r") as f:
-        repospec = json.load(f)
-        repos = repospec["repo"]
-        for repo in range(len(repos)):
-            git_clone_repo(repospec["repo"][repo])
+    if 0 == check_if_file_exits(repospecfile):
+        with open( repospecfile , "r") as f:
+            repospec = json.load(f)
+            repos = repospec["repo"]
+            for repo in range(len(repos)):
+                git_clone_repo(repospec["repo"][repo])
+    else:
+        sys.exit(-1)
 
